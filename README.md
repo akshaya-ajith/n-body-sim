@@ -2,6 +2,6 @@
 
 Solar system simulator using Verlet velocities.
 
-A direct N-Body Simulator. Utilizes elementary molecular dynamics to simulate a solar system using Newtonian mechanics and the Newtonian law of universal gravitation. 
+A direct N-Body Simulator. Utilizes elementary molecular dynamics to simulate a solar system using Newtonian mechanics and the Newtonian law of universal gravitation. Very, very simple.
 
-Introduction to computational physics modeling, and numerical methods to solve differential equations. 
+My introduction to computational physics modeling, and numerical methods to solve differential equations. 
