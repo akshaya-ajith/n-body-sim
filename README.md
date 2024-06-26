@@ -1,6 +1,6 @@
 # n-body-sim
 
-Solar system simulator using OpenGL and Verlet. 
+Solar system simulator using Verlet velocities.
 
 A direct N-Body Simulator. Utilizes elementary molecular dynamics to simulate a solar system using Newtonian mechanics and the Newtonian law of universal gravitation. 
 
