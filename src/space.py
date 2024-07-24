@@ -1,5 +1,5 @@
 import math
-import random
+import random as rd
 from vector import vector
 
 G_CONSTANT = 6.673*(10**-11)
@@ -62,19 +62,17 @@ class body:
 class universe:
     def __init__(self, bodies, total_e):
         #constant timelapse val
-        self._dt = 0.5
+        self.dt = 0.2
         self.bodies = bodies[:]
         
-    def set_dt(self, dt):
-        self._dt = dt
         
     def init_body(self, count):
         for cbody in range(count):
-            rand_x = random.randint(5,150)
-            rand_y = random.randint(5,150)
-            rand_velx = random.random()
-            rand_vely = random.random()
-            rand_mass = random.randint(5, 50)
+            rand_x = rd.randint(5,10)
+            rand_y = rd.randint(5,10)
+            rand_velx = rd.randrange(5)
+            rand_vely = rd.randrange(5)
+            rand_mass = rd.randint(5, 50)
             b = body(rand_mass, vector([rand_x, rand_y]), vector([rand_velx, rand_vely]), vector([0.0,0.0]))
             self.bodies.append(b)
 
@@ -83,21 +81,10 @@ class universe:
             for body2 in self.bodies:
                 if body2==body1:
                     continue
-                body1.update_pos(body2, self._dt)
+                body1.update_pos(body2, self.dt)
             for body2 in self.bodies:
                 if body2==body1:
                     continue
                 body1.check_coll(body2)
 
-    def run(self):
-        count = random.randint(3,10)
-        time = 0
-        sim_length = 1
-        self.init_body(count)
 
-        while time!= sim_length:
-            self.timelapse()
-            time+=self._dt
-            for body in self.bodies:
-                print(body)
-            print()
