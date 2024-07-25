@@ -51,6 +51,7 @@ class body:
         return f"Body(mass={self.m}, pos={self.p}, acc={self._a})"
 
     def check_coll(self, other):
+        self.p 
         if(self.p == other.p): 
             #derived from elastic collisions, where momentum (mv) is conserved:
             vf1 = 2*(self._v - other._v) / (1+self.m/other.m) + self._v
@@ -68,8 +69,8 @@ class universe:
         
     def init_body(self, count):
         for cbody in range(count):
-            rand_x = rd.randint(5,10)
-            rand_y = rd.randint(5,10)
+            rand_x = rd.randint(0,50)
+            rand_y = rd.randint(0,50)
             rand_velx = rd.randrange(5)
             rand_vely = rd.randrange(5)
             rand_mass = rd.randint(5, 50)
