@@ -10,36 +10,30 @@ u = universe([], 0)
 circles = []
 time = 0
 
+fig, ax = plt.subplots(figsize=(10, 10))
+ax.set_facecolor('k')
+ax.set_xlim(0, 1500)
+ax.set_ylim(0, 1500)
 
-def run(u, img):
-    count = rd.randint(3,10)
+
+def run(u):
+    count = rd.randint(50,75)
     sim_length = 10
 
-
-    ax = plt.gca()
-    ax.set_xlim(0, 500)
-    ax.set_ylim(0, 500)
     u.init_body(count)
-    circles = plot(u.bodies)
+    circles = plot(u.bodies, ax)
     for circle in circles: 
         ax.add_patch(circle)
+    
+    for patch in ax.patches:
+        patch.remove()
 
-    ani = animation.FuncAnimation(img, update, frames=sim_length, interval=1, blit=True)
+    ani = animation.FuncAnimation(fig, update, init_func=init, frames=sim_length, interval=1, blit=True)
     plt.show()
-    """
-    while time < sim_length:
-        img.clear()
-        u.timelapse()
-        for obj in u.bodies:
-            print(obj)
-        time+=u.dt
-        
-        ax = plt.gca()
-        circles = plot(u.bodies,ax)
-        plt.draw()  # Update the figure
-        print("Plotted timelapse")
-        plt.show()
-    """
+
+def init():
+    # initialize an empty list of cirlces
+    return []
 
 def update(frame):
     global time
@@ -47,17 +41,11 @@ def update(frame):
     u.timelapse()
     for obj in u.bodies:
         print(obj)
-    for i, circle in enumerate(circles):
-        circle.center = u.bodies[i].pos.coord
 
-    return circles
+    return plot(u.bodies, ax)
 
 def main():
-    
-    plt.style.use('dark_background')
-    img = plt.figure(figsize=(10,10))
-    
-    run(u,img)
+    run(u)
 
 if __name__ == "__main__":
     main()

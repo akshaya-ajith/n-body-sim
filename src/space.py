@@ -13,6 +13,7 @@ class body:
         #self.prev_pos = prev_pos (for Verlet, but without user input)
         self._v = vel
         self._a = acc #for Verlet
+        self.r = math.pow(self.m * 3/4 / math.pi, 1/3)
         #self.prev_acc = prev_acc (for Verlet, but without user input)
 
     # In order to find rad from Body 1 to Body 2
@@ -51,11 +52,15 @@ class body:
         return f"Body(mass={self.m}, pos={self.p}, acc={self._a})"
 
     def check_coll(self, other):
-        self.p 
-        if(self.p == other.p): 
+        distance = self.distance(other).mag()
+        center2center = self.r + other.r
+        if(center2center >= distance): 
             #derived from elastic collisions, where momentum (mv) is conserved:
-            vf1 = 2*(self._v - other._v) / (1+self.m/other.m) + self._v
-            vf2 = 2*(self._v - other._v) / (1+other.m/self.m) +other._v
+            total_mass = self.m + other.m
+            vf1 = self._v.scale((self.m-other.m) / total_mass) + other._v.scale(2 * other.m / total_mass)
+            
+            vf2 = other._v.scale((other.m-self.m) / total_mass) + self._v.scale(2 * self.m / total_mass)
+            
             self._v = vf1
             other._v = vf2
 
@@ -63,17 +68,17 @@ class body:
 class universe:
     def __init__(self, bodies, total_e):
         #constant timelapse val
-        self.dt = 0.2
+        self.dt = 0.01
         self.bodies = bodies[:]
         
         
     def init_body(self, count):
         for cbody in range(count):
-            rand_x = rd.randint(0,50)
-            rand_y = rd.randint(0,50)
-            rand_velx = rd.randrange(5)
-            rand_vely = rd.randrange(5)
-            rand_mass = rd.randint(5, 50)
+            rand_x = rd.randint(100,850)
+            rand_y = rd.randint(100,850)
+            rand_velx = rd.randint(-5,5)
+            rand_vely = rd.randint(-5,5)
+            rand_mass = rd.randint(5, 1000)
             b = body(rand_mass, vector([rand_x, rand_y]), vector([rand_velx, rand_vely]), vector([0.0,0.0]))
             self.bodies.append(b)
 
